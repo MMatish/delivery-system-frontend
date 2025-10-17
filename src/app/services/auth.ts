@@ -9,7 +9,7 @@ import { Config } from './config';
   providedIn: 'root'
 })
 export class Auth {
- private http = inject(HttpClient);
+  private http = inject(HttpClient);
   private router = inject(Router);
   private config = inject(Config);
 
@@ -57,5 +57,17 @@ export class Auth {
     return this.http.get<void>(`${this.config.apiUrl}/sanctum/csrf-cookie`, { withCredentials: true }).pipe(
       tap(() => console.log('CSRF cookie fetched'))
     );
+  }
+
+  registerDriver(data: {
+    name: string;
+    email: string;
+    password: string;
+    password_confirmation: string;
+    vehicle_brand: string;
+    vehicle_type: string;
+    vehicle_plate_number: string;
+  }): Observable<any> {
+    return this.http.post(`${this.config.apiUrl}/register-driver`, data);
   }
 }

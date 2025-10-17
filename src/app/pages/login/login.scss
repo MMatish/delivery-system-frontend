@@ -1,16 +1,25 @@
 .login-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; 
+  gap: 40px;              
+  padding: 40px;
   height: 100vh;
-  background-color:rgb(82, 82, 82);
+  background-color: rgb(82, 82, 82);
+  flex-wrap: wrap;         
+}
+
+.form-card {
+  width: 400px;
+  padding: 20px;
+  flex: 1;
 }
 
 .full-width {
   width: 100%;
 }
 
-mat-card {
-  width: 400px;
-  padding: 20px;
+mat-card-title {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
 }

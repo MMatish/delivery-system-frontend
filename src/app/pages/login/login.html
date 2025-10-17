@@ -1,8 +1,12 @@
 <div class="login-container">
-  <mat-card>
-    <mat-card-title>Login (email: admin@gmail.com password: password123; email: driver@gmail.com, password: password123)</mat-card-title>
+  <mat-card class="form-card">
+    <mat-card-title>
+      Login (admin@gmail.com / password123; driver@gmail.com / password123)
+    </mat-card-title>
+
+    <!-- LOGIN FORM -->
     <mat-card-content>
-      <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+      <form (ngSubmit)="onLogin()" [formGroup]="loginForm">
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>Email</mat-label>
           <input matInput type="email" formControlName="email" required>
@@ -15,6 +19,52 @@
 
         <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
           Login
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="form-card">
+    <mat-card-title>Register as Driver</mat-card-title>
+    <mat-card-content>
+      <form (ngSubmit)="onRegister()" [formGroup]="registerForm">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput type="password" formControlName="password_confirmation" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Vehicle Brand</mat-label>
+          <input matInput formControlName="vehicle_brand" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Vehicle Type</mat-label>
+          <input matInput formControlName="vehicle_type" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Vehicle Plate Number</mat-label>
+          <input matInput formControlName="vehicle_plate_number" required>
+        </mat-form-field>
+
+        <button mat-raised-button color="accent" type="submit" [disabled]="registerForm.invalid">
+          Register
         </button>
       </form>
     </mat-card-content>

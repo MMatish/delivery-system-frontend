@@ -1,1 +1,96 @@
-<p>dashboard works!</p>
+<div class="container">
+    <div *ngIf="user?.role === 'admin'">
+        <button mat-raised-button color="primary" (click)="openJobDialog()">Create Job</button>
+
+        <mat-form-field>
+            <mat-label>Filter by status</mat-label>
+            <mat-select (selectionChange)="applyFilter($event.value)">
+                <mat-option [value]="null">All</mat-option>
+                <mat-option value="assigned">Assigned</mat-option>
+                <mat-option value="unassigned">Unassigned</mat-option>
+                <mat-option value="in_progress">In Progress</mat-option>
+                <mat-option value="completed">Completed</mat-option>
+                <mat-option value="failed">Failed</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <table mat-table [dataSource]="jobs" class="mat-elevation-z8 full-width">
+            <ng-container matColumnDef="pickup">
+                <th mat-header-cell *matHeaderCellDef>Pickup</th>
+                <td mat-cell *matCellDef="let job">{{job.pickup_address}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="delivery">
+                <th mat-header-cell *matHeaderCellDef>Delivery</th>
+                <td mat-cell *matCellDef="let job">{{job.delivery_address}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="recipient">
+                <th mat-header-cell *matHeaderCellDef>Recipient</th>
+                <td mat-cell *matCellDef="let job">{{job.recipient_name}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let job">{{job.status}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="driver">
+                <th mat-header-cell *matHeaderCellDef>Driver</th>
+                <td mat-cell *matCellDef="let job">{{job.driver?.name || 'Unassigned'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let job">
+                    <button mat-button color="accent" (click)="openJobDialog(job)">Edit</button>
+                    <button mat-button color="warn" (click)="deleteJob(job)">Delete</button>
+
+                    <!-- Driver assign select -->
+                    <mat-form-field *ngIf="drivers.length" appearance="fill" class="driver-select">
+                        <mat-label>Assign Driver</mat-label>
+                        <mat-select [value]="job.driver?.id" (selectionChange)="assignDriver(job, $event.value)">
+                            <mat-option *ngFor="let d of drivers" [value]="d.id">{{ d.name }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="['pickup','delivery','recipient','status','driver','actions']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['pickup','delivery','recipient','status','driver','actions'];">
+            </tr>
+        </table>
+    </div>
+
+    <div *ngIf="user?.role === 'driver'">
+        <h2>My Jobs</h2>
+        <table mat-table [dataSource]="jobs" class="mat-elevation-z8 full-width">
+            <ng-container matColumnDef="pickup">
+                <th mat-header-cell *matHeaderCellDef>Pickup</th>
+                <td mat-cell *matCellDef="let job">{{job.pickup_address}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="delivery">
+                <th mat-header-cell *matHeaderCellDef>Delivery</th>
+                <td mat-cell *matCellDef="let job">{{job.delivery_address}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let job">
+                    <mat-select [(value)]="job.status" (selectionChange)="updateStatus(job, $event.value)">
+                        <mat-option value="assigned">Assigned</mat-option>
+                        <mat-option value="in_progress">In Progress</mat-option>
+                        <mat-option value="completed">Completed</mat-option>
+                        <mat-option value="failed">Failed</mat-option>
+                    </mat-select>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['pickup','delivery','status']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['pickup','delivery','status'];"></tr>
+        </table>
+    </div>
+
+</div>

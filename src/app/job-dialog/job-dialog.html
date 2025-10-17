@@ -1,0 +1,29 @@
+<div class="container">
+    <h1 mat-dialog-title>{{ data.id ? 'Edit Job' : 'Create Job' }}</h1>
+    <div mat-dialog-content>
+        <form [formGroup]="form">
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Pickup Address</mat-label>
+                <input matInput formControlName="pickup_address">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Delivery Address</mat-label>
+                <input matInput formControlName="delivery_address">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Recipient Name</mat-label>
+                <input matInput formControlName="recipient_name">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Recipient Phone</mat-label>
+                <input matInput formControlName="recipient_phone">
+            </mat-form-field>
+        </form>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="submit()" [disabled]="form.invalid">Save</button>
+    </div>
+</div>

@@ -16,6 +16,6 @@ export const credentialsInterceptor: HttpInterceptorFn = (req: HttpRequest<any>,
       headers: cloned.headers.set('X-XSRF-TOKEN', token)
     });
   }
-
+  
   return next(cloned);
 };
